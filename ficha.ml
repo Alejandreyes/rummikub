@@ -1,14 +1,16 @@
+(*module type FichaI =
+sig
+	type palo
+	type ficha
+	val valor: ficha -> int
+	val palo:  ficha -> palo
+	val compara: ficha -> ficha -> int
+end
+module Ficha:FichaI = struct*)
 module Ficha = struct
-type palo = C | R | P | T |Comodin
-	type ficha = {n:int ;p: palo}
-
-	let palo ficha= match ficha with
-	| (_,p) -> p
-	let valor ficha = match ficha with
-	| (v,_) -> v
-
-	let compara carta1 carta2 = match carta1 with
-	| (n,_) -> (match carta2 with
-	| (m,_) -> if (n>m) then (-1) else (if (m>n) then 1 else 0))
-	
+	type palo = C | D | P | T |Comodin
+	type ficha =  {valor:int; palo: palo} 
+	let valor ficha= ficha.valor
+	let palo ficha= ficha.palo 
+	let compara ficha1 ficha2 = if ((ficha1.valor)>(ficha2.valor)) then (-1) else (if ((ficha2.valor)>(ficha1.valor)) then 1 else 0)
 end

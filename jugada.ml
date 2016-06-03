@@ -1,6 +1,6 @@
 open Ficha
 open List
-module type JugadaI =
+(*module type JugadaI =
 sig
 	type jugada
 	type ficha 
@@ -12,17 +12,19 @@ sig
 	val checaEscalera: jugada -> int -> palo -> bool
 	val esEscalera: jugada -> bool
 end
-module Jugada:JugadaI = struct
+module Jugada:JugadaI = struct*)
+module Jugada = struct
 	type ficha = Ficha.ficha 
 	type palo = Ficha.palo
 	type jugada = ficha list  
-	let esComodin ficha= match ficha with
-	| (n,m) -> if ((n == 0) && (m == Comodin)) then true else false  
+	
+	
+	let esComodin ficha= if ((ficha.valor == 0) && (ficha.palo == Comodin)) then true else false  
 	(*funcion auxiliar de esSerie*)
 	let rec checaSerie lista numero palosExistentes = match lista with
 	| [] -> true
 	| (x::xs) -> if (((valor x) == numero && (not (mem (palo x) palosExistentes))) || (esComodin x)) then (checaSerie xs numero ((palo x)::palosExistentes)) else false  
-		(*Metodo que revisa si una lista es una serie (secuencia de fichas con numeros iguales) es valida  *)
+	(*Metodo que revisa si una lista es una serie (secuencia de fichas con numeros iguales) es valida  *)
 	let esSerie lista =if (length lista < 3) then false else (checaSerie lista (valor (hd lista)) [])
 	let rec checaEscalera lista numero p = match lista with
 	| [] -> true
@@ -33,5 +35,4 @@ module Jugada:JugadaI = struct
 	| [] -> false
 	| _ -> ((esEscalera lista) || (esSerie lista))
 
-	
 end
